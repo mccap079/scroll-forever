@@ -1,0 +1,18 @@
+#verticalScroller, #verticalScrollerGiphy {
+    position: absolute;
+    width:100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.ytContainer{
+    position: absolute;
+    width:560px;
+    height:340px;
+}
+
+.giphyContainer{
+	position: absolute;
+	width:400px;
+    height:400px;
+}
