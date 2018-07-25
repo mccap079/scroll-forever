@@ -1,6 +1,6 @@
 # procrastination feed
 
-http://blog.p-am.cc/assets/a-prototype-for-procrastination/20180306_liveWeb_final_documentation.mov
+[demo](http://blog.p-am.cc/assets/a-prototype-for-procrastination/20180306_liveWeb_final_documentation.mov)
 
 ## overview
 
