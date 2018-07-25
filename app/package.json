@@ -1,5 +1,5 @@
 {
-    "name": "Procrastination Feed",
+    "name": "Procrastination-Feed",
     "version": "1.0.0",
     "description": "Scroll forever <3",
     "main": "app.js",
@@ -16,7 +16,9 @@
     ],
     "author": "GitHub",
     "license": "CC0-1.0",
-    "devDependencies": {
-        "electron": "~1.7.8"
+    "devDependencies": {},
+    "dependencies": {
+        "electron": "^2.0.5",
+        "hoek": "^5.0.3"
     }
 }
