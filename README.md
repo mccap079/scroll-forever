@@ -1,4 +1,4 @@
-# procrastination feed
+# a prototype for procrastination
 
 [demo](http://blog.p-am.cc/assets/a-prototype-for-procrastination/20180306_liveWeb_final_documentation.mov)
 
