@@ -8,7 +8,7 @@ An ElectronJS app pulling viral media from imgur, youtube and giphy (+ a layer o
 
 ## how to run:
 
-Download the `.app` (macOS) [here](https://github.com/mccap079/scroll-forever/blob/master/app/Procrastination-Feed-darwin-x64.zip) or at `app > Procrastination Feed-darwin-x64 > Procrastination Feed.app`.
+Download the `.app` (macOS) [here](https://github.com/mccap079/scroll-forever/blob/master/app/Procrastination-Feed-darwin-x64.zip) or at `app > Procrastination-Feed-darwin-x64.zip`.
 
 ## if you were to host this yourself:
 
