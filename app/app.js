@@ -2,8 +2,6 @@ const electron = require('electron')
 const ipcMain = require('electron').ipcMain;
 const app = electron.app
 
-app.disableHardwareAcceleration();
-
 const BrowserWindow = electron.BrowserWindow
 const path = require('path')
 const url = require('url')
@@ -11,10 +9,20 @@ const url = require('url')
 let window1;
 let window2;
 
+// electron.defaultSession.webRequest.onHeadersReceived((details, callback) => {
+//     details.
+//     callback({responseHeaders: `default-src 'none'`})
+//   })
+
 function createWindow() {
 
     window2 = new BrowserWindow({
+        webPreferences: {
+            nodeIntegration: false
+        },
         transparent: true,
+        hasShadow: false,
+        titleBarStyle: 'hidden',
     })
     window2.maximize()
     window2.show()
@@ -24,7 +32,12 @@ function createWindow() {
     })
 
     window1 = new BrowserWindow({
+        webPreferences: {
+            nodeIntegration: false
+        },
         transparent: true,
+        hasShadow: false,
+        titleBarStyle: 'hidden',
         show: false
     })
     window1.maximize()
