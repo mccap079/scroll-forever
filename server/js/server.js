@@ -2,6 +2,8 @@ var http = require('https');
 var fs = require('fs');
 var url = require('url');
 
+var keyImgur = fs.readFileSync('keyImgur.txt');
+
 var options = {
     key: fs.readFileSync('my-key.pem'),
     cert: fs.readFileSync('my-cert.pem')
@@ -64,6 +66,6 @@ const imgurOptions = {
     path: "/3/gallery/hot/viral/0",
     method: "GET",
     headers: {
-        "Authorization": "Client-ID 1eeb25328e9da18"
+        "Authorization": "Client-ID " + keyImgur
     }
 }
