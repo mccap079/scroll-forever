@@ -13,7 +13,7 @@ function createWindow() {
 
     window2 = new BrowserWindow({
         webPreferences: {
-            nodeIntegration: false
+            nodeIntegration: true
         },
         transparent: true,
         hasShadow: false,
@@ -28,7 +28,7 @@ function createWindow() {
 
     window1 = new BrowserWindow({
         webPreferences: {
-            nodeIntegration: false
+            nodeIntegration: true
         },
         transparent: true,
         hasShadow: false,

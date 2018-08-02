@@ -4,7 +4,8 @@
 // ------ general setup
 
 var windowWidth = window.innerWidth - 560, //560 = .ytContainer width
-    scrollAmt = 10;
+    scrollAmt = 10,
+    numElems = 5; //for each type (giphy, youtube)
 const ipcRenderer = require("electron").ipcRenderer; //for receiving scroll data from window1
 
 // ------ giphy setup
@@ -21,7 +22,7 @@ jsonGiphy = JSON.parse(xhrGiphy.responseText);
 for (let i = 0; i < jsonGiphy.data.length; i++) {
     imgUrlsGiphy.push(jsonGiphy.data[i].images.downsized.url);
 }
-for (let i = 0; i < 10; i++) {
+for (let i = 0; i < numElems * 2; i++) {
     elemGiphy[i] = document.createElement('div');
     elemGiphy[i].setAttribute('id', 'giphy_' + i);
     elemGiphy[i].setAttribute('class', 'giphyContainer');
@@ -41,27 +42,41 @@ var year = d.getFullYear(),
     month = d.getMonth() + 1,
     day = d.getDate();
 var publishedAfter = year + "-" + month + "-" + day;
+publishedAfter = "2018-6-31";
 //save 1 month ago to date:
 month = d.setMonth(d.getMonth() - 1);
 var _d = new Date(month);
 var _month = _d.getMonth() + 1;
 var publishedBefore = year + "-" + _month + "-" + day;
 
+console.log("publishedBefore = " + publishedBefore);
+console.log("publishedAfter = " + publishedAfter);
+
 //load top 50 vids based on view count from past month
-xhrYt.open("GET", "https://www.googleapis.com/youtube/v3/search?part=snippet&order=viewCount&maxResults=50&publishedAfter=" + publishedBefore + "T00%3A00%3A00Z&publishedBefore=" + publishedAfter + "T00%3A00%3A00Z&safeSearch=strict&videoEmbeddable=true&videoSyndicated=true&type=video&videoLicense=creativeCommon&key=AIzaSyD4LJ_KCXoyVhWDHdJ4iLlB2DWez_sjTBQ", false);
+console.log("get = " + "https://www.googleapis.com/youtube/v3/search?part=snippet&order=viewCount&maxResults=50&publishedAfter=" + publishedBefore + "T00%3A00%3A00Z&safeSearch=strict&videoEmbeddable=true&videoSyndicated=true&type=video&videoLicense=creativeCommon&key=AIzaSyD4LJ_KCXoyVhWDHdJ4iLlB2DWez_sjTBQ");
+xhrYt.open("GET", "https://www.googleapis.com/youtube/v3/search?part=snippet&order=viewCount&maxResults=50&publishedAfter=" + publishedBefore + "T00%3A00%3A00Z&safeSearch=strict&videoEmbeddable=true&videoSyndicated=true&type=video&videoLicense=creativeCommon&key=AIzaSyD4LJ_KCXoyVhWDHdJ4iLlB2DWez_sjTBQ", false);
 xhrYt.send();
 console.log(xhrYt.status);
 console.log(xhrYt.statusText);
 jsonYt = JSON.parse(xhrYt.responseText);
 
-for (let i = 0; i < jsonYt.items.length; i++) { //get 5 random vids from results and save em in memory
+console.log("jsonYt.items.length = " + jsonYt.items.length);
+
+for (let i = 0; i < jsonYt.items.length; i++) {
+    let vidUrl = "https://www.youtube.com/embed/" + jsonYt.items[i].id.videoId + "?rel=0&autoplay=1";
+    vidUrlsYt.push(vidUrl);
+    console.log("vidUrl " + i + " = " + vidUrl);
+}
+
+for (let i = 0; i < numElems; i++) {
     elemYt[i] = document.createElement('div');
     elemYt[i].setAttribute('id', 'ytContainer' + i);
     elemYt[i].setAttribute('class', 'ytContainer');
-    let vidUrl = "https://www.youtube.com/embed/" + jsonYt.items[i].id.videoId + "?rel=0&autoplay=1";
-    vidUrlsYt.push(vidUrl);
-    elemYt[i].innerHTML = "<iframe class=\"video\" id=\"video1\" width=\"640px\" height=\"380px\" src=\"" + vidUrl + "\" frameborder=\"0\"></iframe>";
+    let thisUrl = "<iframe class=\"video\" id=\"video1\" width=\"640px\" height=\"380px\" src=\"" + vidUrlsYt[Math.floor(Math.random() * (vidUrlsYt.length - 1))] + "\" frameborder=\"0\"></iframe>";
+    console.log("thisUrl " + i + " = " + thisUrl);
+    elemYt[i].innerHTML = thisUrl;
 }
+console.log("elemYt.length = " + elemYt.length);
 
 window.addEventListener('load', function(e) {
 
@@ -69,8 +84,8 @@ window.addEventListener('load', function(e) {
         scrollAmt = data;
     });
 
-    for (let i = 0; i < 5; i++) {
-        document.getElementById('verticalScroller').appendChild(elemYt[getRandomInt(0, jsonYt.items.length - 1)]);
+    for (let i = 0; i < numElems; i++) {
+        document.getElementById('verticalScroller').appendChild(elemYt[getRandomInt(0, elemYt.length - 1)]);
         document.getElementById('verticalScroller').appendChild(elemGiphy[getRandomInt(0, elemGiphy.length - 1)]);
     }
     let i = 0;
@@ -91,7 +106,7 @@ window.verticalScroller = function($elem) { //[1]
         top = $('#verticalScroller').height()
         $elem.css("left", Math.floor(Math.random() * windowWidth));
         if ($elem.hasClass('ytContainer')) {
-            $elem.children().attr('src', vidUrlsYt[Math.floor(Math.random() * (vidUrlsYt.length - 1))]);
+            $elem.children().attr('src', vidUrlsYt[getRandomInt(0, vidUrlsYt.length - 1)]);
         } else {
             $elem.children().attr('src', imgUrlsGiphy[getRandomInt(0, imgUrlsGiphy.length - 1)]);
         }
