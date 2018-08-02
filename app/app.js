@@ -9,11 +9,6 @@ const url = require('url')
 let window1;
 let window2;
 
-// electron.defaultSession.webRequest.onHeadersReceived((details, callback) => {
-//     details.
-//     callback({responseHeaders: `default-src 'none'`})
-//   })
-
 function createWindow() {
 
     window2 = new BrowserWindow({
